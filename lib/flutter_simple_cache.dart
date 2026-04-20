@@ -50,4 +50,20 @@ class FlutterSimpleCache {
 
   /// Returns the number of items in the cache.
   static int get size => _cache.length;
+  static void debugPrintStats() {
+    print('--- FlutterSimpleCache ---');
+    print('Total keys: ${_cache.length}');
+
+    _cache.forEach((key, value) {
+      if (value is Iterable) {
+        print('$key -> ${value.length} items');
+      } else if (value is Map) {
+        print('$key -> ${value.length} entries');
+      } else {
+        print('$key -> ${value.runtimeType}');
+      }
+    });
+
+    print('--------------------------');
+  }
 }
