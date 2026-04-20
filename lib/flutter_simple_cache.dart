@@ -1,5 +1,7 @@
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
+class FlutterSimpleCache {
+  FlutterSimpleCache._internal();
+
+  static final FlutterSimpleCache _instance = FlutterSimpleCache._internal();
+
+  static FlutterSimpleCache get instance => _instance;
 }
