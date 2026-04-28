@@ -47,6 +47,7 @@ class FlutterSimpleCache {
   static void remove(String key) => _cache.remove(key);
   static void invalidate(String key) => _cache.remove(key);
   static void clear() => _cache.clear();
+  static void invalidateAll() => _cache.clear();
 
   /// Returns the number of items in the cache.
   static int get size => _cache.length;
