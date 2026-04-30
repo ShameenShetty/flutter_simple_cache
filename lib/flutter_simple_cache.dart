@@ -19,9 +19,9 @@ class FlutterSimpleCache {
 
   static bool contains(String key) => _cache.containsKey(key);
 
-  static void set(String key, dynamic value) => _cache[key] = value;
+  static void set<T>(String key, T value) => _cache[key] = value;
 
-  static dynamic get(String key) => _cache[key];
+  static T? get<T>(String key) => _cache[key] as T?;
 
   /// Returns the cached value for [key] if present,
   /// otherwise calls [fetcher], caches the result, and returns it.
@@ -34,14 +34,17 @@ class FlutterSimpleCache {
   /// getOrFetch('cities', () => getMysqlData()); // correct
   /// getOrFetch('cities', getMysqlData());       // wrong (still calls getMysqlData() immediately)
   /// ```
-  static dynamic getOrFetch(String key, Function() fetcher) {
+  static Future<T> getOrFetch<T>(
+    String key,
+    Future<T> Function() fetcher,
+  ) async {
     if (contains(key)) {
-      return get(key);
-    } else {
-      final value = fetcher();
-      set(key, value);
-      return value;
+      return get<T>(key)!;
     }
+
+    final value = await fetcher();
+    set<T>(key, value);
+    return value;
   }
 
   static void remove(String key) => _cache.remove(key);
